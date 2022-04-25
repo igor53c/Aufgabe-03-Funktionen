@@ -23,6 +23,7 @@
 // Geben Sie die jeweiligen Werte für die Funktionen über die Konsole ein.
 
 #include <iostream>
+#include <sstream>
 
 using namespace std;
 
@@ -31,28 +32,25 @@ int maximum2a(int, int, int);
 int maximum2b(int, int, int);
 int maximum(int, int, int);
 
+int readConsole();
+
 void main()
 {
     locale::global(locale("German_germany"));
 
     int nummer1, nummer2, nummer3;
 
-    cout << endl << "Geben Sie die erste Zahl ein: ";
-    cin >> nummer1;
+    nummer1 = readConsole();
 
-    cout << endl << "Geben Sie die zweite Zahl ein: ";
-    cin >> nummer2;
+    nummer2 = readConsole();
 
     cout << endl << "Das Maximum ist: " << maximum(nummer1, nummer2) << endl;
 
-    cout << endl << "Geben Sie die erste Zahl ein: ";
-    cin >> nummer1;
+    nummer1 = readConsole();
 
-    cout << endl << "Geben Sie die zweite Zahl ein: ";
-    cin >> nummer2;
+    nummer2 = readConsole();
 
-    cout << endl << "Geben Sie die dritte Zahl ein: ";
-    cin >> nummer3;
+    nummer3 = readConsole();
 
     cout << endl << "2.(a) Das Maximum ist: " << maximum2a(nummer1, nummer2, nummer3) << endl;
     cout << endl << "2.(b) Das Maximum ist: " << maximum2b(nummer1, nummer2, nummer3) << endl;
@@ -87,4 +85,44 @@ int maximum2b(int nummer1, int nummer2, int nummer3)
 int maximum(int nummer1, int nummer2, int nummer3)
 {
     return maximum(maximum(nummer1, nummer2), nummer3);
+}
+
+int readConsole()
+{
+    int retValue = 0;
+
+    bool eingabeOK = false;
+
+    string eingabe;
+
+    do
+    {
+        cout << "\nBitte einen ganzzahligen Wert eingeben: " << endl;
+
+        getline(cin, eingabe);
+
+        try
+        {
+            retValue = stoi(eingabe);
+
+            eingabeOK = true;
+        }
+        catch (invalid_argument ex)
+        {
+            cerr << "Ungültige Eingabe: " << ex.what() << endl;
+        }
+        catch (out_of_range ex)
+        {
+            cerr << "Ungültige Eingabe: " << ex.what() << endl;
+        }
+        catch (exception ex)
+        {
+            cerr << "Ungültige Eingabe: " << ex.what() << endl;
+        }
+
+       
+
+    } while (!eingabeOK);
+
+    return retValue;
 }
